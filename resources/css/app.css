@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "./nexpos.css";
+
+:root {
+    color-scheme: light;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+}
