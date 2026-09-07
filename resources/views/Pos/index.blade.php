@@ -105,10 +105,6 @@
                 Create a New Sale
             </h2>
 
-            <p>
-                Select a product to add it to the current transaction.
-            </p>
-
         </div>
 
 

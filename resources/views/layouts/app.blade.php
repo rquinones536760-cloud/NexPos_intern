@@ -1,210 +1,98 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="csrf-token"
+        content="{{ csrf_token() }}"
+    >
 
     <title>@yield('title', 'NexPOS')</title>
 
-    <link rel="icon" type="image/png"
-          href="{{ asset('images/NexPOSLogo.png') }}">
+    {{-- NexPOS Logo --}}
+    <link
+        rel="icon"
+        type="image/png"
+        href="{{ asset('images/NexPOSLogo.png') }}"
+    >
 
-    <link rel="apple-touch-icon"
-          href="{{ asset('images/NexPOSLogo.png') }}">
+    <link
+        rel="apple-touch-icon"
+        href="{{ asset('images/NexPOSLogo.png') }}"
+    >
 
-    {{-- NO VITE --}}
-    <link rel="stylesheet"
-          href="{{ asset('css/nexpos.css') }}">
+    {{-- =========================================================
+         NEXPOS CSS
+         NO VITE
+    ========================================================== --}}
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/nexpos.css') }}"
+    >
 
+    {{-- =========================================================
+         NEXPOS JAVASCRIPT
+         NO VITE
+    ========================================================== --}}
     <script
         src="{{ asset('js/nexpos.js') }}"
-        defer>
-    </script>
+        defer
+    ></script>
+
+    @stack('styles')
 </head>
+
 
 <body>
 
 <div class="nexpos-app">
 
-    {{-- Mobile Overlay --}}
-    <div id="mobileOverlay" class="mobile-overlay"></div>
+    {{-- =========================================================
+         MOBILE OVERLAY
+    ========================================================== --}}
+    <div
+        id="mobileOverlay"
+        class="mobile-overlay"
+    ></div>
 
 
     {{-- =========================================================
          SIDEBAR
+         
+         IMPORTANT:
+         The sidebar is already located at:
+         
+         resources/views/components/sidebar.blade.php
+         
+         We are loading it here instead of duplicating it.
     ========================================================== --}}
-    <aside id="sidebar" class="sidebar">
-
-        {{-- Logo --}}
-        <div class="sidebar-logo">
-
-            <a href="{{ route('dashboard') }}"
-               class="logo-link">
-
-                <img
-                    src="{{ asset('images/NexPOSLogo.png') }}"
-                    alt="NexPOS Logo"
-                    class="logo-image"
-                >
-
-                <div class="logo-text">
-                    <strong>
-                        Nex<span>POS</span>
-                    </strong>
-
-                    <small>
-                        Management
-                    </small>
-                </div>
-
-            </a>
-
-        </div>
-
-
-        {{-- Navigation --}}
-        <nav class="sidebar-nav">
-
-            {{-- Main --}}
-            <div class="nav-group">
-
-                <p class="nav-heading">
-                    MAIN
-                </p>
-
-                <a
-                    href="{{ route('dashboard') }}"
-                    class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"
-                >
-                    <span class="nav-icon">⌂</span>
-                    <span class="nav-label">Dashboard</span>
-                </a>
-
-
-                <a
-                    href="{{ route('pos') }}"
-                    class="nav-item {{ request()->routeIs('pos') ? 'active' : '' }}"
-                >
-                    <span class="nav-icon">▣</span>
-                    <span class="nav-label">Point of Sale</span>
-                </a>
-
-            </div>
-
-
-            {{-- Management --}}
-            <div class="nav-group">
-
-                <p class="nav-heading">
-                    MANAGEMENT
-                </p>
-
-
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">▦</span>
-                    <span class="nav-label">Products</span>
-                </a>
-
-
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">☷</span>
-                    <span class="nav-label">Inventory</span>
-                </a>
-
-
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">♙</span>
-                    <span class="nav-label">Customers</span>
-                </a>
-
-
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">▤</span>
-                    <span class="nav-label">Sales</span>
-                </a>
-
-
-                <a href="#" class="nav-item">
-                    <span class="nav-icon">▥</span>
-                    <span class="nav-label">Reports</span>
-                </a>
-
-            </div>
-
-        </nav>
-
-
-        {{-- Sidebar Bottom --}}
-        <div class="sidebar-bottom">
-
-            <button
-                type="button"
-                id="collapseSidebar"
-                class="collapse-button"
-            >
-                <span id="collapseIcon">‹</span>
-                <span class="nav-label">Collapse</span>
-            </button>
-
-
-            {{-- User --}}
-            <div class="user-box">
-
-                <div class="user-avatar">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
-                </div>
-
-                <div class="user-info">
-
-                    <strong>
-                        {{ explode(' ', auth()->user()->name ?? 'User')[0] }}
-                    </strong>
-
-                    <span>
-                        {{ auth()->user()->email ?? '' }}
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            {{-- Logout --}}
-            <form
-                action="{{ route('logout') }}"
-                method="POST"
-                class="logout-form"
-            >
-                @csrf
-
-                <button
-                    type="submit"
-                    class="logout-button"
-                >
-                    <span class="logout-icon">↪</span>
-                    <span class="nav-label">Sign Out</span>
-                </button>
-
-            </form>
-
-        </div>
-
-    </aside>
+    <x-sidebar />
 
 
     {{-- =========================================================
          MAIN AREA
     ========================================================== --}}
-    <div id="mainArea" class="main-area">
+    <div
+        id="mainArea"
+        class="main-area"
+    >
 
-        {{-- Topbar --}}
+        {{-- =====================================================
+             TOPBAR
+        ====================================================== --}}
         <header class="topbar">
 
             <div class="topbar-left">
 
+                {{-- Mobile Menu Button --}}
                 <button
                     type="button"
                     id="mobileMenuButton"
@@ -215,6 +103,7 @@
                 </button>
 
 
+                {{-- Page Heading --}}
                 <div>
 
                     <p class="date-text">
@@ -230,14 +119,22 @@
             </div>
 
 
+            {{-- =================================================
+                 TOPBAR RIGHT
+            ================================================== --}}
             <div class="topbar-right">
 
+                {{-- System Status --}}
                 <div class="system-status">
+
                     <span></span>
+
                     System Online
+
                 </div>
 
 
+                {{-- Notification --}}
                 <button
                     type="button"
                     class="notification-button"
@@ -251,25 +148,74 @@
         </header>
 
 
-        {{-- Page --}}
+        {{-- =====================================================
+             PAGE CONTENT
+        ====================================================== --}}
         <main class="page-content">
 
+            {{-- =================================================
+                 SUCCESS MESSAGE
+            ================================================== --}}
             @if(session('success'))
+
                 <div class="flash-message success">
+
                     <span>✓</span>
+
                     {{ session('success') }}
+
                 </div>
+
             @endif
 
 
+            {{-- =================================================
+                 ERROR MESSAGE
+            ================================================== --}}
             @if(session('error'))
+
                 <div class="flash-message error">
+
                     <span>!</span>
+
                     {{ session('error') }}
+
                 </div>
+
             @endif
 
 
+            {{-- =================================================
+                 VALIDATION ERRORS
+            ================================================== --}}
+            @if($errors->any())
+
+                <div class="flash-message error">
+
+                    <span>!</span>
+
+                    <div>
+
+                        @foreach($errors->all() as $error)
+
+                            <div>
+                                {{ $error }}
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                </div>
+
+            @endif
+
+
+            {{-- =================================================
+                 CHILD PAGE CONTENT
+                 
+                 Dashboard, POS, Products, Inventory, etc.
+            ================================================== --}}
             @yield('content')
 
         </main>
@@ -278,5 +224,13 @@
 
 </div>
 
+
+{{-- =========================================================
+     PAGE-SPECIFIC SCRIPTS
+========================================================= --}}
+@stack('scripts')
+
+
 </body>
+
 </html>

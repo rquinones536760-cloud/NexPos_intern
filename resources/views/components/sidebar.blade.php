@@ -1,179 +1,128 @@
-<aside
-    id="sidebar"
-    class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col border-r border-slate-800 bg-slate-950 transition-transform duration-300 lg:translate-x-0"
->
+<aside id="sidebar" class="sidebar">
 
-    {{-- Logo --}}
-    <div class="flex h-[73px] items-center justify-between border-b border-slate-800 px-6">
+    {{-- =====================================================
+         LOGO
+    ====================================================== --}}
+    <div class="sidebar-logo">
 
-        <a
-            href="{{ url('/dashboard') }}"
-            class="flex items-center gap-3"
-        >
+        <a href="{{ route('dashboard') }}" class="logo-link">
 
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 shadow-lg shadow-blue-600/20">
-                <svg
-                    class="h-5 w-5 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M3 7h18M5 7v10a2 2 0 002 2h10a2 2 0 002-2V7M8 11h8M8 15h5"
-                    />
-                </svg>
-            </div>
+            <img
+                src="{{ asset('images/NexPOSLogo.png') }}"
+                alt="NexPOS"
+                class="logo-image"
+            >
 
-            <div>
-                <h1 class="text-lg font-bold tracking-tight text-white">
-                    NexPOS
-                </h1>
-
-                <p class="text-xs text-slate-500">
-                    Business Management
-                </p>
+            <div class="logo-text">
+                <strong>Nex<span>POS</span></strong>
+                <small>Point of Sale System</small>
             </div>
 
         </a>
 
-        <button
-            id="close-sidebar"
-            type="button"
-            class="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
-        >
-            ✕
-        </button>
-
     </div>
 
 
-    {{-- Navigation --}}
-    <nav class="flex-1 overflow-y-auto px-4 py-6">
+    {{-- =====================================================
+         NAVIGATION
+    ====================================================== --}}
+    <nav class="sidebar-nav">
 
-        <p class="mb-3 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-            Overview
-        </p>
+        <div class="nav-group">
 
-        <div class="space-y-1">
+            <div class="nav-heading">
+                MAIN MENU
+            </div>
 
-            <a
-                href="{{ url('/dashboard') }}"
-                class="flex items-center gap-3 rounded-xl bg-blue-600/10 px-3 py-3 text-sm font-medium text-blue-400"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    ▣
+
+            {{-- Dashboard --}}
+            <a href="{{ route('dashboard') }}"
+               class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+
+                <span class="nav-icon">⌂</span>
+
+                <span class="nav-label">
+                    Dashboard
                 </span>
 
-                Dashboard
             </a>
 
-            <a
-                href="#"
-                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    $
+
+            {{-- Point of Sale --}}
+            <a href="{{ route('pos') }}"
+               class="nav-item {{ request()->routeIs('pos') ? 'active' : '' }}">
+
+                <span class="nav-icon">▣</span>
+
+                <span class="nav-label">
+                    Point of Sale
                 </span>
 
-                Sales
             </a>
 
-            <a
-                href="#"
-                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    🛒
-                </span>
 
-                Orders
-            </a>
+            {{-- Products --}}
+            <a href="{{ route('products.index') }}"
+               class="nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
 
-        </div>
+                <span class="nav-icon">▦</span>
 
-
-        <p class="mb-3 mt-8 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-            Management
-        </p>
-
-        <div class="space-y-1">
-
-            <a
-                href="#"
-                class="flex items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex items-center gap-3">
-                    <span class="flex h-5 w-5 items-center justify-center">
-                        ▦
-                    </span>
-
+                <span class="nav-label">
                     Products
                 </span>
+
             </a>
 
-            <a
-                href="#"
-                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    ◫
+
+            {{-- Inventory --}}
+            <a href="{{ route('inventory.index') }}"
+               class="nav-item {{ request()->routeIs('inventory.*') ? 'active' : '' }}">
+
+                <span class="nav-icon">☷</span>
+
+                <span class="nav-label">
+                    Inventory
                 </span>
 
-                Inventory
             </a>
 
-            <a
-                href="#"
-                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    ♙
+
+            {{-- Customers --}}
+            <a href="{{ route('customers.index') }}"
+               class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
+
+                <span class="nav-icon">♙</span>
+
+                <span class="nav-label">
+                    Customers
                 </span>
 
-                Customers
             </a>
 
-        </div>
 
+            {{-- Sales --}}
+            <a href="{{ route('sales.index') }}"
+               class="nav-item {{ request()->routeIs('sales.*') ? 'active' : '' }}">
 
-        <p class="mb-3 mt-8 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-            Analytics
-        </p>
+                <span class="nav-icon">▤</span>
 
-        <div class="space-y-1">
-
-            <a
-                href="#"
-                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    ◒
+                <span class="nav-label">
+                    Sales
                 </span>
 
-                Reports
             </a>
 
-        </div>
 
+            {{-- Reports --}}
+            <a href="{{ route('reports.index') }}"
+               class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
 
-        <p class="mb-3 mt-8 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-            System
-        </p>
+                <span class="nav-icon">▥</span>
 
-        <div class="space-y-1">
-
-            <a
-                href="#"
-                class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-                <span class="flex h-5 w-5 items-center justify-center">
-                    ⚙
+                <span class="nav-label">
+                    Reports
                 </span>
 
-                Settings
             </a>
 
         </div>
@@ -181,43 +130,74 @@
     </nav>
 
 
-    {{-- User --}}
-    <div class="border-t border-slate-800 p-4">
+    {{-- =====================================================
+         SIDEBAR BOTTOM
+    ====================================================== --}}
+    <div class="sidebar-bottom">
 
-        <div class="flex items-center gap-3 rounded-xl bg-slate-900 p-3">
+        {{-- Collapse --}}
+        <button
+            type="button"
+            id="collapseSidebarButton"
+            class="collapse-button"
+            aria-label="Collapse sidebar"
+        >
 
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
-                {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+            <span>‹</span>
+
+            <span class="nav-label">
+                Collapse Sidebar
+            </span>
+
+        </button>
+
+
+        {{-- User --}}
+        <div class="user-box">
+
+            <div class="user-avatar">
+                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
             </div>
 
-            <div class="min-w-0 flex-1">
+            <div class="user-info">
 
-                <p class="truncate text-sm font-semibold text-white">
-                    {{ auth()->user()->name ?? 'Administrator' }}
-                </p>
+                <strong>
+                    {{ auth()->user()->name ?? 'User' }}
+                </strong>
 
-                <p class="truncate text-xs text-slate-500">
-                    Administrator
-                </p>
+                <span>
+                    {{ auth()->user()->email ?? 'user@nexpos.com' }}
+                </span>
 
             </div>
 
         </div>
 
+
+        {{-- Logout --}}
         <form
             method="POST"
             action="{{ route('logout') }}"
-            class="mt-2"
+            class="logout-form"
         >
+
             @csrf
 
             <button
                 type="submit"
-                class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-400 transition hover:bg-red-500/10 hover:text-red-400"
+                class="logout-button"
             >
-                <span>↪</span>
-                Sign out
+
+                <span class="logout-icon">
+                    ↪
+                </span>
+
+                <span class="nav-label">
+                    Logout
+                </span>
+
             </button>
+
         </form>
 
     </div>
