@@ -7,25 +7,19 @@
 
 <div class="nexpos-page">
 
-
     <div class="page-intro">
 
         <div>
-
             <span class="page-label">
                 TRANSACTION HISTORY
             </span>
 
-            <h2>
-                Sales
-            </h2>
+            <h2>Sales</h2>
 
             <p>
                 View and manage completed sales transactions.
             </p>
-
         </div>
-
 
         <a
             href="{{ route('pos') }}"
@@ -38,7 +32,6 @@
 
 
     <section class="dashboard-card">
-
 
         <form
             method="GET"
@@ -173,9 +166,7 @@
                                 class="empty-table"
                             >
 
-                                <div>
-                                    🧾
-                                </div>
+                                <div>🧾</div>
 
                                 <strong>
                                     No sales found

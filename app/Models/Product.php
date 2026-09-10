@@ -14,7 +14,11 @@ class Product extends Model
         'cost',
         'stock',
         'category',
+        'unit',
+        'low_stock_limit',
+        'description',
         'status',
+        'image',
     ];
 
     public function saleItems()
@@ -24,6 +28,8 @@ class Product extends Model
 
     public function isLowStock(): bool
     {
-        return $this->stock > 0 && $this->stock <= 10;
+        $limit = $this->low_stock_limit ?? 10;
+
+        return $this->stock > 0 && $this->stock <= $limit;
     }
 }

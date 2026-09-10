@@ -1,11 +1,17 @@
-<aside id="sidebar" class="sidebar">
+<aside
+    id="sidebar"
+    class="sidebar"
+>
 
     {{-- =====================================================
          LOGO
     ====================================================== --}}
     <div class="sidebar-logo">
 
-        <a href="{{ route('dashboard') }}" class="logo-link">
+        <a
+            href="{{ route('dashboard') }}"
+            class="logo-link"
+        >
 
             <img
                 src="{{ asset('images/NexPOSLogo.png') }}"
@@ -14,8 +20,15 @@
             >
 
             <div class="logo-text">
-                <strong>Nex<span>POS</span></strong>
-                <small>Point of Sale System</small>
+
+                <strong>
+                    Nex<span>POS</span>
+                </strong>
+
+                <small>
+                    Point of Sale System
+                </small>
+
             </div>
 
         </a>
@@ -36,10 +49,14 @@
 
 
             {{-- Dashboard --}}
-            <a href="{{ route('dashboard') }}"
-               class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a
+                href="{{ route('dashboard') }}"
+                class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">⌂</span>
+                <span class="nav-icon">
+                    ⌂
+                </span>
 
                 <span class="nav-label">
                     Dashboard
@@ -49,10 +66,14 @@
 
 
             {{-- Point of Sale --}}
-            <a href="{{ route('pos') }}"
-               class="nav-item {{ request()->routeIs('pos') ? 'active' : '' }}">
+            <a
+                href="{{ route('pos') }}"
+                class="nav-item {{ request()->routeIs('pos') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">▣</span>
+                <span class="nav-icon">
+                    ▣
+                </span>
 
                 <span class="nav-label">
                     Point of Sale
@@ -62,10 +83,14 @@
 
 
             {{-- Products --}}
-            <a href="{{ route('products.index') }}"
-               class="nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
+            <a
+                href="{{ route('products.index') }}"
+                class="nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">▦</span>
+                <span class="nav-icon">
+                    ▦
+                </span>
 
                 <span class="nav-label">
                     Products
@@ -75,10 +100,14 @@
 
 
             {{-- Inventory --}}
-            <a href="{{ route('inventory.index') }}"
-               class="nav-item {{ request()->routeIs('inventory.*') ? 'active' : '' }}">
+            <a
+                href="{{ route('inventory.index') }}"
+                class="nav-item {{ request()->routeIs('inventory.*') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">☷</span>
+                <span class="nav-icon">
+                    ☷
+                </span>
 
                 <span class="nav-label">
                     Inventory
@@ -88,10 +117,14 @@
 
 
             {{-- Customers --}}
-            <a href="{{ route('customers.index') }}"
-               class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
+            <a
+                href="{{ route('customers.index') }}"
+                class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">♙</span>
+                <span class="nav-icon">
+                    ♙
+                </span>
 
                 <span class="nav-label">
                     Customers
@@ -101,10 +134,14 @@
 
 
             {{-- Sales --}}
-            <a href="{{ route('sales.index') }}"
-               class="nav-item {{ request()->routeIs('sales.*') ? 'active' : '' }}">
+            <a
+                href="{{ route('sales.index') }}"
+                class="nav-item {{ request()->routeIs('sales.*') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">▤</span>
+                <span class="nav-icon">
+                    ▤
+                </span>
 
                 <span class="nav-label">
                     Sales
@@ -114,10 +151,14 @@
 
 
             {{-- Reports --}}
-            <a href="{{ route('reports.index') }}"
-               class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+            <a
+                href="{{ route('reports.index') }}"
+                class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}"
+            >
 
-                <span class="nav-icon">▥</span>
+                <span class="nav-icon">
+                    ▥
+                </span>
 
                 <span class="nav-label">
                     Reports
@@ -141,9 +182,14 @@
             id="collapseSidebarButton"
             class="collapse-button"
             aria-label="Collapse sidebar"
+            aria-expanded="true"
         >
 
-            <span>‹</span>
+            <span
+                id="collapseIcon"
+            >
+                ‹
+            </span>
 
             <span class="nav-label">
                 Collapse Sidebar

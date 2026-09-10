@@ -9,9 +9,16 @@ class SaleItem extends Model
     protected $fillable = [
         'sale_id',
         'product_id',
-        'qty',
+        'product_name',
+        'quantity',
         'price',
-        'total'
+        'subtotal',
+    ];
+
+    protected $casts = [
+        'quantity' => 'integer',
+        'price' => 'decimal:2',
+        'subtotal' => 'decimal:2',
     ];
 
     public function sale()

@@ -35,7 +35,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])
         ->name('login.store');
 
-
     Route::get('/register', [AuthController::class, 'showRegister'])
         ->name('register');
 
@@ -52,7 +51,6 @@ Route::middleware('guest')->group(function () {
 */
 
 Route::middleware('auth')->group(function () {
-
 
     /*
     |--------------------------------------------------------------------------
@@ -71,7 +69,7 @@ Route::middleware('auth')->group(function () {
     */
 
     Route::get('/pos', function () {
-        return view('pos.index');
+        return view('Pos.index');
     })->name('pos');
 
 
@@ -94,8 +92,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/inventory', [InventoryController::class, 'index'])
         ->name('inventory.index');
 
-    Route::patch('/inventory/{product}/stock', [InventoryController::class, 'updateStock'])
-        ->name('inventory.stock');
+    Route::patch(
+        '/inventory/{product}/stock',
+        [InventoryController::class, 'updateStock']
+    )->name('inventory.stock');
 
 
     /*
@@ -114,11 +114,20 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/sales', [SaleController::class, 'index'])
-        ->name('sales.index');
+    Route::get(
+        '/sales',
+        [SaleController::class, 'index']
+    )->name('sales.index');
 
-    Route::get('/sales/{sale}', [SaleController::class, 'show'])
-        ->name('sales.show');
+    Route::post(
+        '/sales/store',
+        [SaleController::class, 'store']
+    )->name('sales.store');
+
+    Route::get(
+        '/sales/{sale}',
+        [SaleController::class, 'show']
+    )->name('sales.show');
 
 
     /*
@@ -127,8 +136,10 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/reports', [ReportController::class, 'index'])
-        ->name('reports.index');
+    Route::get(
+        '/reports',
+        [ReportController::class, 'index']
+    )->name('reports.index');
 
 
     /*
@@ -137,7 +148,9 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::post('/logout', [AuthController::class, 'logout'])
-        ->name('logout');
+    Route::post(
+        '/logout',
+        [AuthController::class, 'logout']
+    )->name('logout');
 
 });

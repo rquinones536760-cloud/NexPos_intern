@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -17,7 +16,9 @@
 
     <title>@yield('title', 'NexPOS')</title>
 
-    {{-- NexPOS Logo --}}
+    {{-- =========================================================
+         NEXPOS LOGO
+    ========================================================== --}}
     <link
         rel="icon"
         type="image/png"
@@ -29,6 +30,7 @@
         href="{{ asset('images/NexPOSLogo.png') }}"
     >
 
+
     {{-- =========================================================
          NEXPOS CSS
          NO VITE
@@ -38,6 +40,7 @@
         href="{{ asset('css/nexpos.css') }}"
     >
 
+
     {{-- =========================================================
          NEXPOS JAVASCRIPT
          NO VITE
@@ -46,6 +49,7 @@
         src="{{ asset('js/nexpos.js') }}"
         defer
     ></script>
+
 
     @stack('styles')
 </head>
@@ -66,13 +70,6 @@
 
     {{-- =========================================================
          SIDEBAR
-         
-         IMPORTANT:
-         The sidebar is already located at:
-         
-         resources/views/components/sidebar.blade.php
-         
-         We are loading it here instead of duplicating it.
     ========================================================== --}}
     <x-sidebar />
 
@@ -92,7 +89,7 @@
 
             <div class="topbar-left">
 
-                {{-- Mobile Menu Button --}}
+                {{-- Mobile Menu --}}
                 <button
                     type="button"
                     id="mobileMenuButton"
@@ -103,7 +100,7 @@
                 </button>
 
 
-                {{-- Page Heading --}}
+                {{-- Page Information --}}
                 <div>
 
                     <p class="date-text">
@@ -153,41 +150,39 @@
         ====================================================== --}}
         <main class="page-content">
 
-            {{-- =================================================
-                 SUCCESS MESSAGE
-            ================================================== --}}
+            {{-- Success --}}
             @if(session('success'))
 
                 <div class="flash-message success">
 
                     <span>✓</span>
 
-                    {{ session('success') }}
+                    <div>
+                        {{ session('success') }}
+                    </div>
 
                 </div>
 
             @endif
 
 
-            {{-- =================================================
-                 ERROR MESSAGE
-            ================================================== --}}
+            {{-- Error --}}
             @if(session('error'))
 
                 <div class="flash-message error">
 
                     <span>!</span>
 
-                    {{ session('error') }}
+                    <div>
+                        {{ session('error') }}
+                    </div>
 
                 </div>
 
             @endif
 
 
-            {{-- =================================================
-                 VALIDATION ERRORS
-            ================================================== --}}
+            {{-- Validation Errors --}}
             @if($errors->any())
 
                 <div class="flash-message error">
@@ -212,9 +207,7 @@
 
 
             {{-- =================================================
-                 CHILD PAGE CONTENT
-                 
-                 Dashboard, POS, Products, Inventory, etc.
+                 PAGE CONTENT
             ================================================== --}}
             @yield('content')
 

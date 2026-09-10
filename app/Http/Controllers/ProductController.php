@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -21,17 +22,34 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'sku' => 'required|unique:products',
-            'price' => 'required|numeric',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'sku' => 'required|string|max:255|unique:products,sku',
+            'barcode' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'cost' => 'nullable|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category' => 'nullable|string|max:255',
+            'status' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        Product::create($request->all());
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Product Image
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')
+                ->store('products', 'public');
+        }
+
+        Product::create($validated);
 
         return redirect()
             ->route('products.index')
-            ->with('success', 'Product created.');
+            ->with('success', 'Product created successfully.');
     }
 
     public function edit(Product $product)
@@ -41,22 +59,57 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric'
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'sku' => 'required|string|max:255|unique:products,sku,' . $product->id,
+            'barcode' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'cost' => 'nullable|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category' => 'nullable|string|max:255',
+            'status' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $product->update($request->all());
+        /*
+        |--------------------------------------------------------------------------
+        | Replace Product Image
+        |--------------------------------------------------------------------------
+        */
+
+        if ($request->hasFile('image')) {
+
+            // Delete old image
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+
+            // Store new image
+            $validated['image'] = $request->file('image')
+                ->store('products', 'public');
+        }
+
+        $product->update($validated);
 
         return redirect()
             ->route('products.index')
-            ->with('success', 'Product updated.');
+            ->with('success', 'Product updated successfully.');
     }
 
     public function destroy(Product $product)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Delete Product Image
+        |--------------------------------------------------------------------------
+        */
+
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+
         $product->delete();
 
-        return back()->with('success', 'Product deleted.');
+        return back()->with('success', 'Product deleted successfully.');
     }
 }
