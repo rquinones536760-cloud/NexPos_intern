@@ -10,34 +10,17 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Mass Assignment
-    |--------------------------------------------------------------------------
-    */
-
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | Hidden Attributes
-    |--------------------------------------------------------------------------
-    */
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | Attribute Casting
-    |--------------------------------------------------------------------------
-    */
 
     protected function casts(): array
     {
@@ -45,5 +28,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
     }
 }

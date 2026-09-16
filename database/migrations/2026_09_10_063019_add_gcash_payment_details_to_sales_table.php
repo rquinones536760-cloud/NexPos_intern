@@ -6,36 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('sales', function (Blueprint $table) {
 
-            $table->string('payment_reference')
-                ->nullable()
-                ->after('payment_method');
+            if (!Schema::hasColumn('sales', 'payment_reference')) {
+                $table->string('payment_reference')
+                    ->nullable()
+                    ->after('payment_method');
+            }
 
-            $table->string('payment_proof')
-                ->nullable()
-                ->after('payment_reference');
-
+            if (!Schema::hasColumn('sales', 'payment_proof')) {
+                $table->string('payment_proof')
+                    ->nullable()
+                    ->after('payment_reference');
+            }
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('sales', function (Blueprint $table) {
 
-            $table->dropColumn([
-                'payment_reference',
-                'payment_proof',
-            ]);
+            if (Schema::hasColumn('sales', 'payment_proof')) {
+                $table->dropColumn('payment_proof');
+            }
 
+            if (Schema::hasColumn('sales', 'payment_reference')) {
+                $table->dropColumn('payment_reference');
+            }
         });
     }
 };

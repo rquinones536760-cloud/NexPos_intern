@@ -1,17 +1,9 @@
-<aside
-    id="sidebar"
-    class="sidebar"
->
+<aside id="sidebar" class="sidebar">
 
-    {{-- =====================================================
-         LOGO
-    ====================================================== --}}
+    {{-- LOGO --}}
     <div class="sidebar-logo">
 
-        <a
-            href="{{ route('dashboard') }}"
-            class="logo-link"
-        >
+        <a href="{{ route('dashboard') }}" class="logo-link">
 
             <img
                 src="{{ asset('images/NexPOSLogo.png') }}"
@@ -20,7 +12,6 @@
             >
 
             <div class="logo-text">
-
                 <strong>
                     Nex<span>POS</span>
                 </strong>
@@ -28,7 +19,6 @@
                 <small>
                     Point of Sale System
                 </small>
-
             </div>
 
         </a>
@@ -36,9 +26,7 @@
     </div>
 
 
-    {{-- =====================================================
-         NAVIGATION
-    ====================================================== --}}
+    {{-- NAVIGATION --}}
     <nav class="sidebar-nav">
 
         <div class="nav-group">
@@ -53,15 +41,11 @@
                 href="{{ route('dashboard') }}"
                 class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"
             >
-
-                <span class="nav-icon">
-                    ⌂
-                </span>
+                <span class="nav-icon">⌂</span>
 
                 <span class="nav-label">
                     Dashboard
                 </span>
-
             </a>
 
 
@@ -70,15 +54,11 @@
                 href="{{ route('pos') }}"
                 class="nav-item {{ request()->routeIs('pos') ? 'active' : '' }}"
             >
-
-                <span class="nav-icon">
-                    ▣
-                </span>
+                <span class="nav-icon">▣</span>
 
                 <span class="nav-label">
                     Point of Sale
                 </span>
-
             </a>
 
 
@@ -87,50 +67,43 @@
                 href="{{ route('products.index') }}"
                 class="nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}"
             >
-
-                <span class="nav-icon">
-                    ▦
-                </span>
+                <span class="nav-icon">▦</span>
 
                 <span class="nav-label">
                     Products
                 </span>
-
             </a>
 
 
-            {{-- Inventory --}}
-            <a
-                href="{{ route('inventory.index') }}"
-                class="nav-item {{ request()->routeIs('inventory.*') ? 'active' : '' }}"
-            >
+            {{-- ADMIN ONLY --}}
+            @if(auth()->user()->isAdmin())
 
-                <span class="nav-icon">
-                    ☷
-                </span>
+                {{-- Inventory --}}
+                <a
+                    href="{{ route('inventory.index') }}"
+                    class="nav-item {{ request()->routeIs('inventory.*') ? 'active' : '' }}"
+                >
+                    <span class="nav-icon">☷</span>
 
-                <span class="nav-label">
-                    Inventory
-                </span>
+                    <span class="nav-label">
+                        Inventory
+                    </span>
+                </a>
 
-            </a>
 
+                {{-- Customers --}}
+                <a
+                    href="{{ route('customers.index') }}"
+                    class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}"
+                >
+                    <span class="nav-icon">♙</span>
 
-            {{-- Customers --}}
-            <a
-                href="{{ route('customers.index') }}"
-                class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}"
-            >
+                    <span class="nav-label">
+                        Customers
+                    </span>
+                </a>
 
-                <span class="nav-icon">
-                    ♙
-                </span>
-
-                <span class="nav-label">
-                    Customers
-                </span>
-
-            </a>
+            @endif
 
 
             {{-- Sales --}}
@@ -138,42 +111,50 @@
                 href="{{ route('sales.index') }}"
                 class="nav-item {{ request()->routeIs('sales.*') ? 'active' : '' }}"
             >
-
-                <span class="nav-icon">
-                    ▤
-                </span>
+                <span class="nav-icon">▤</span>
 
                 <span class="nav-label">
                     Sales
                 </span>
-
             </a>
 
 
-            {{-- Reports --}}
-            <a
-                href="{{ route('reports.index') }}"
-                class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}"
-            >
+            {{-- ADMIN ONLY --}}
+            @if(auth()->user()->isAdmin())
 
-                <span class="nav-icon">
-                    ▥
-                </span>
+                {{-- Reports --}}
+                <a
+                    href="{{ route('reports.index') }}"
+                    class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}"
+                >
+                    <span class="nav-icon">▥</span>
 
-                <span class="nav-label">
-                    Reports
-                </span>
+                    <span class="nav-label">
+                        Reports
+                    </span>
+                </a>
 
-            </a>
+
+                {{-- Users --}}
+                <a
+                    href="{{ route('users.index') }}"
+                    class="nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}"
+                >
+                    <span class="nav-icon">♙</span>
+
+                    <span class="nav-label">
+                        Users
+                    </span>
+                </a>
+
+            @endif
 
         </div>
 
     </nav>
 
 
-    {{-- =====================================================
-         SIDEBAR BOTTOM
-    ====================================================== --}}
+    {{-- SIDEBAR BOTTOM --}}
     <div class="sidebar-bottom">
 
         {{-- Collapse --}}
@@ -184,21 +165,17 @@
             aria-label="Collapse sidebar"
             aria-expanded="true"
         >
-
-            <span
-                id="collapseIcon"
-            >
+            <span id="collapseIcon">
                 ‹
             </span>
 
             <span class="nav-label">
                 Collapse Sidebar
             </span>
-
         </button>
 
 
-        {{-- User --}}
+        {{-- Logged-in User --}}
         <div class="user-box">
 
             <div class="user-avatar">
@@ -214,6 +191,10 @@
                 <span>
                     {{ auth()->user()->email ?? 'user@nexpos.com' }}
                 </span>
+
+                <small style="display:block; margin-top:3px;">
+                    {{ ucfirst(auth()->user()->role ?? 'user') }}
+                </small>
 
             </div>
 
@@ -233,7 +214,6 @@
                 type="submit"
                 class="logout-button"
             >
-
                 <span class="logout-icon">
                     ↪
                 </span>
@@ -241,7 +221,6 @@
                 <span class="nav-label">
                     Logout
                 </span>
-
             </button>
 
         </form>

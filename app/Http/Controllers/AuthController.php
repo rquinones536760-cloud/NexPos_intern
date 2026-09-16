@@ -32,15 +32,14 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => [
                 'required',
-                'email'
+                'email',
             ],
 
             'password' => [
                 'required',
-                'string'
+                'string',
             ],
         ]);
-
 
         if (
             Auth::attempt(
@@ -48,7 +47,6 @@ class AuthController extends Controller
                 $request->boolean('remember')
             )
         ) {
-
             $request->session()->regenerate();
 
             return redirect()
@@ -58,7 +56,6 @@ class AuthController extends Controller
                     'Welcome back!'
                 );
         }
-
 
         return back()
             ->withErrors([
@@ -90,11 +87,10 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-
             'name' => [
                 'required',
                 'string',
-                'max:255'
+                'max:255',
             ],
 
             'email' => [
@@ -102,20 +98,17 @@ class AuthController extends Controller
                 'string',
                 'email',
                 'max:255',
-                'unique:users,email'
+                'unique:users,email',
             ],
 
             'password' => [
                 'required',
                 'confirmed',
-                Password::min(8)
+                Password::min(8),
             ],
-
         ]);
 
-
         $user = User::create([
-
             'name' =>
                 $validated['name'],
 
@@ -125,13 +118,13 @@ class AuthController extends Controller
             'password' =>
                 $validated['password'],
 
+            'role' =>
+                'user',
         ]);
-
 
         Auth::login($user);
 
         $request->session()->regenerate();
-
 
         return redirect()
             ->route('dashboard')
@@ -152,11 +145,9 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
 
         return redirect()
             ->route('home')

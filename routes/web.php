@@ -7,6 +7,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -54,7 +55,7 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | DASHBOARD
+    | ADMIN + USER
     |--------------------------------------------------------------------------
     */
 
@@ -77,34 +78,13 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     | PRODUCTS
     |--------------------------------------------------------------------------
+    |
+    | Admin + User can currently access Products.
+    | We can restrict create/edit/delete separately.
+    |
     */
 
     Route::resource('products', ProductController::class)
-        ->except(['show']);
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | INVENTORY
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/inventory', [InventoryController::class, 'index'])
-        ->name('inventory.index');
-
-    Route::patch(
-        '/inventory/{product}/stock',
-        [InventoryController::class, 'updateStock']
-    )->name('inventory.stock');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CUSTOMERS
-    |--------------------------------------------------------------------------
-    */
-
-    Route::resource('customers', CustomerController::class)
         ->except(['show']);
 
 
@@ -132,14 +112,68 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | REPORTS
+    | ADMIN ONLY
     |--------------------------------------------------------------------------
     */
 
-    Route::get(
-        '/reports',
-        [ReportController::class, 'index']
-    )->name('reports.index');
+    Route::middleware('admin')->group(function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | INVENTORY
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/inventory',
+            [InventoryController::class, 'index']
+        )->name('inventory.index');
+
+        Route::patch(
+            '/inventory/{product}/stock',
+            [InventoryController::class, 'updateStock']
+        )->name('inventory.stock');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CUSTOMERS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'customers',
+            CustomerController::class
+        )->except(['show']);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | REPORTS
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/reports',
+            [ReportController::class, 'index']
+        )->name('reports.index');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | USER MANAGEMENT
+        |--------------------------------------------------------------------------
+        |
+        | Only Admin accounts can manage users.
+        |
+        */
+
+        Route::resource(
+            'users',
+            UserController::class
+        )->except(['show']);
+
+    });
 
 
     /*
